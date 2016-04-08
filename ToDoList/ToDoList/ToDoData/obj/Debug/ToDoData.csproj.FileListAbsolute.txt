@@ -9,3 +9,7 @@ D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.dll
 D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.pdb
 D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\ToDoData.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\ToDoData.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\ToDoData.dll.mdb

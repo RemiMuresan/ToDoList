@@ -19,5 +19,7 @@ D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\res\drawable\icon.png
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\res\values\theme.xml
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\R.cs.flag
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\uploadflags.txt
+D:\work\ToDoList\ToDoList\ToDoList\bin\Debug\ToDoBL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoList\bin\Debug\ToDoData.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\ToDoList.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoList\bin\Debug\ToDoList.dll.mdb

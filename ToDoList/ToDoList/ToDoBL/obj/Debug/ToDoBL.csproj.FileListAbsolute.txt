@@ -11,3 +11,7 @@ D:\work\ToDoList\ToDoList\ToDoBL\obj\Debug\ToDoBL.dll
 D:\work\ToDoList\ToDoList\ToDoBL\obj\Debug\ToDoBL.pdb
 D:\work\ToDoList\ToDoList\ToDoBL\obj\Debug\ToDoBL.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoBL\bin\Debug\ToDoBL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoBL\obj\Debug\ToDoBL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoBL\bin\Debug\ToDoBL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoBL\obj\Debug\ToDoBL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoBL\bin\Debug\ToDoBL.dll.mdb

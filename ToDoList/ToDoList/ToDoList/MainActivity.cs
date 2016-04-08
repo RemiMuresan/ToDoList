@@ -49,11 +49,12 @@ namespace ToDoList
             _repo = new ToDoBL.TasksRepository(_databasePath);
 
             _savedTasks = await _repo.GetTasks();
-            if (_savedTasks != null && _savedTasks.Count > 0)
+            if (_savedTasks == null)
             {
-                _savedTasks.Insert(0, new ToDoData.Task() { Name = "New" });
-                LoadSavedTasks(0);
+                _savedTasks = new List<Task>();
             }
+            _savedTasks.Insert(0, new ToDoData.Task() { Name = "New" });
+            LoadSavedTasks(0);
 
             colorText.Click += ColorText_Click;
             save.Click += Save_Click;
