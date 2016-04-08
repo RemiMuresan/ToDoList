@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="AddList">Save</string>
+    <string name="ApplicationName">ToDoList</string>
+    <string name="Color">Mark as done</string>
+  <string name="Delete">Delete</string>
+  <string name="NameLabel">Name:</string>
+  <string name="ToDo">ToDo:</string>
+  <string name="ExistingTasksLabel">Select task:</string>
+</resources>

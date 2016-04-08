@@ -1,0 +1,4 @@
+ToDoList.MainActivity, ToDoList;md5f8e7624ffb19f8d5dd0e8af7539c0e6a.MainActivity
+ToDoList.MainActivity, ToDoList, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5f8e7624ffb19f8d5dd0e8af7539c0e6a.MainActivity
+ToDoList.MainActivity;md5f8e7624ffb19f8d5dd0e8af7539c0e6a.MainActivity
+todolist.MainActivity;md5f8e7624ffb19f8d5dd0e8af7539c0e6a.MainActivity

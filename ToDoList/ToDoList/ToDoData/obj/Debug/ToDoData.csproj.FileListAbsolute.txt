@@ -1,0 +1,11 @@
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\x86\sqlite3.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\x64\sqlite3.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\ToDoData.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\ToDoData.pdb
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\SQLite-net.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\SQLitePCL.raw.dll
+D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.csprojResolveAssemblyReference.cache
+D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.dll
+D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.pdb
+D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\ToDoData.dll.mdb
