@@ -18,22 +18,34 @@ namespace ToDoBL
             {
                 _connection = new SQLiteAsyncConnection(path);
                 _connection.CreateTableAsync<ToDoData.Task>();
+                _connection.CreateTableAsync<ToDoData.TaskItem>();
             }
             catch (SQLiteException ex)
             {
 
             }
         }
-        public async Task<int> InsertUpdateTask(ToDoData.Task task)
+        public async Task<int> InsertUpdateTask(ToDoData.Task task, List<TaskItem> items)
         {
             try
             {
+                if (task.Id > 0 && items != null && items.Count > 0)
+                {
+                    var oldItems = await _connection.Table<ToDoData.TaskItem>().Where(x => x.TaskId == task.Id).ToListAsync();
+                    foreach (var item in oldItems)
+                        await _connection.DeleteAsync(item);
+                }
                 if (task.Id == 0)
                 {
                     await _connection.InsertAsync(task);
                 }
                 else
                     await _connection.UpdateAsync(task);
+                foreach (var i in items)
+                {
+                    i.TaskId = task.Id;
+                }
+                await _connection.InsertAllAsync(items);
             }
             catch (SQLiteException ex)
             {
@@ -55,6 +67,11 @@ namespace ToDoBL
         public async Task<List<ToDoData.Task>> GetTasks()
         {
             return await _connection.Table<ToDoData.Task>().ToListAsync();
+        }
+
+        public async Task<List<ToDoData.TaskItem>> GetTaskItems(int taskId)
+        {
+            return await _connection.Table<ToDoData.TaskItem>().Where(x => x.TaskId == taskId).ToListAsync();
         }
 
         public async Task<ToDoData.Task> GetTask(int id)

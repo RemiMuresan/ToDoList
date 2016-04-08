@@ -66,6 +66,9 @@ D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\System.ServiceModel.Inte
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\System.Numerics.dll
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\Mono.Data.Tds.dll
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\Mono.Security.dll
+D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\SQLiteNetExtensions.dll
+D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\SQLite.Net.dll
+D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\Newtonsoft.Json.dll
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\System.ComponentModel.DataAnnotations.dll
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\System.ComponentModel.Composition.dll
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\System.ServiceModel.dll

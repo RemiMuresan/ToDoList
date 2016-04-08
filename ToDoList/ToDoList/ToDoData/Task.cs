@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace ToDoData
 {
@@ -17,7 +18,7 @@ namespace ToDoData
         public DateTime DateCreated { get; set; }
         public DateTime LastChange { get; set; }
         public DateTime? DueDate { get; set; }
-
+        
         public override string ToString()
         {
             return this.Name;

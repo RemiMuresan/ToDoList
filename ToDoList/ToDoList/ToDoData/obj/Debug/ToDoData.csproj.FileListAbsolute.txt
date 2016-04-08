@@ -7,9 +7,13 @@ D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\SQLitePCL.raw.dll
 D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.csprojResolveAssemblyReference.cache
 D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.dll
 D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.pdb
-D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\ToDoData.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\ToDoData.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\Newtonsoft.Json.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\SQLite.Net.Async.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\SQLite.Net.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\SQLite.Net.Platform.Generic.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\SQLite.Net.Platform.Win32.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\SQLiteNetExtensions.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\SQLiteNetExtensionsAsync.dll
+D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\Newtonsoft.Json.xml
 D:\work\ToDoList\ToDoList\ToDoData\obj\Debug\ToDoData.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoData\bin\Debug\ToDoData.dll.mdb

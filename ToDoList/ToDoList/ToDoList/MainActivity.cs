@@ -21,7 +21,9 @@ namespace ToDoList
         private readonly string _databasePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "todo.db");
         private List<Task> _savedTasks;
         private Task _currentTask;
+        private List<TaskItem> _currentItems;
         private ToDoBL.TasksRepository _repo;
+        private List<string> _checkedItems;
 
         EditText taskName;
         EditText taskBody;
@@ -60,52 +62,19 @@ namespace ToDoList
             save.Click += Save_Click;
             delete.Click += Delete_Click;
         }
-
-        private void LoadSavedTasks(int index)
-        {
-            var adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleSpinnerItem, _savedTasks);
-            adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-            adapter.SetNotifyOnChange(true);
-            if(handler != null)
-                savedList.ItemSelected -= handler;
-            handler = new EventHandler<AdapterView.ItemSelectedEventArgs>(SavedList_ItemSelected);
-            savedList.ItemSelected += handler;
-            savedList.Adapter = adapter;
-            savedList.SetSelection(index, true);
-        }
-
-        private void Delete_Click(object sender, EventArgs e)
-        {
-            _repo.DeleteTask(_currentTask);
-            _savedTasks.Remove(_currentTask);
-            taskName.Text = string.Empty;
-            taskBody.Text = string.Empty;
-            _currentTask = _savedTasks[0];
-            delete.Enabled = false;
-            LoadSavedTasks(0);
-        }
-
-        private void SavedList_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
-        {
-            _currentTask = _savedTasks.ElementAt(e.Position);
-            if (_currentTask != null && _currentTask.Id > 0)
-            {
-                taskName.Text = _currentTask.Name;
-                taskBody.TextFormatted = new SpannableString(_currentTask.Text);
-                delete.Enabled = true;
-
-            }
-            else
-            {
-                taskName.Text = string.Empty;
-                taskBody.Text = string.Empty;
-                delete.Enabled = false;
-            }
-        }
         private async void Save_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(taskName.Text) && !string.IsNullOrEmpty(taskBody.Text))
             {
+                var text = taskBody.Text;
+                var textItems = text.Split(new string[] { "\n" }, StringSplitOptions.None);
+                _currentItems = new List<TaskItem>();
+                foreach(var textItem in textItems)
+                {
+                    if (!string.IsNullOrEmpty(textItem))
+                        _currentItems.Add(new TaskItem() { Text = textItem, ChangedAt = DateTime.Now, IsDone = false, TaskId = _currentTask.Id });
+                }
+
                 if (_currentTask != null && _currentTask.Id > 0)
                 {
                     _currentTask.Name = taskName.Text;
@@ -122,11 +91,41 @@ namespace ToDoList
                     _savedTasks.Add(_currentTask);
                     delete.Enabled = true;
                 }
-                var id = await _repo.InsertUpdateTask(_currentTask);
+                var id = await _repo.InsertUpdateTask(_currentTask, _currentItems);
                 _currentTask.Id = id;
                 var item = _savedTasks.Where(x => x.Id == _currentTask.Id).FirstOrDefault();
                 item = _currentTask; ;
                 LoadSavedTasks(_savedTasks.IndexOf(item));
+            }
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            _repo.DeleteTask(_currentTask);
+            _savedTasks.Remove(_currentTask);
+            taskName.Text = string.Empty;
+            taskBody.Text = string.Empty;
+            _currentTask = _savedTasks[0];
+            delete.Enabled = false;
+            LoadSavedTasks(0);
+        }
+
+        private async void SavedList_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            _currentTask = _savedTasks.ElementAt(e.Position);
+            if (_currentTask != null && _currentTask.Id > 0)
+            {
+                taskName.Text = _currentTask.Name;
+                taskBody.TextFormatted = new SpannableString(_currentTask.Text);
+                delete.Enabled = true;
+                var items = await _repo.GetTaskItems(_currentTask.Id);
+                _currentItems = items;
+            }
+            else
+            {
+                taskName.Text = string.Empty;
+                taskBody.Text = string.Empty;
+                delete.Enabled = false;
             }
         }
 
@@ -137,6 +136,19 @@ namespace ToDoList
             wordSpan.SetSpan(new ForegroundColorSpan(Android.Graphics.Color.Red), taskBody.SelectionStart, taskBody.SelectionEnd, SpanTypes.ExclusiveExclusive);
             wordSpan.SetSpan(new StrikethroughSpan(), taskBody.SelectionStart, taskBody.SelectionEnd, SpanTypes.ExclusiveExclusive);
             taskBody.TextFormatted = wordSpan;
+        }
+        
+        private void LoadSavedTasks(int index)
+        {
+            var adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleSpinnerItem, _savedTasks);
+            adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            adapter.SetNotifyOnChange(true);
+            if (handler != null)
+                savedList.ItemSelected -= handler;
+            handler = new EventHandler<AdapterView.ItemSelectedEventArgs>(SavedList_ItemSelected);
+            savedList.ItemSelected += handler;
+            savedList.Adapter = adapter;
+            savedList.SetSelection(index, true);
         }
     }
 }
