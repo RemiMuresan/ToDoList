@@ -23,7 +23,7 @@ namespace ToDoList
         private Task _currentTask;
         private List<TaskItem> _currentItems;
         private ToDoBL.TasksRepository _repo;
-        private List<string> _checkedItems;
+        private List<int> _checkedItems;
 
         EditText taskName;
         EditText taskBody;
@@ -47,7 +47,7 @@ namespace ToDoList
             taskBody = FindViewById<EditText>(Resource.Id.editText);
             taskName = FindViewById<EditText>(Resource.Id.editName);
             savedList = FindViewById<Spinner>(Resource.Id.savedList);
-            
+            _checkedItems = new List<int>();
             _repo = new ToDoBL.TasksRepository(_databasePath);
 
             _savedTasks = await _repo.GetTasks();
@@ -62,19 +62,25 @@ namespace ToDoList
             save.Click += Save_Click;
             delete.Click += Delete_Click;
         }
+
         private async void Save_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(taskName.Text) && !string.IsNullOrEmpty(taskBody.Text))
             {
                 var text = taskBody.Text;
-                var textItems = text.Split(new string[] { "\n" }, StringSplitOptions.None);
-                _currentItems = new List<TaskItem>();
-                foreach(var textItem in textItems)
+                CreateCurrentItemsFromText(text);
+                var span = new SpannableString(taskBody.TextFormatted);
+                var spans = span.GetSpans(0, taskBody.Text.Length - 1, Java.Lang.Class.FromType(typeof(ForegroundColorSpan)));
+                if (span != null)
                 {
-                    if (!string.IsNullOrEmpty(textItem))
-                        _currentItems.Add(new TaskItem() { Text = textItem, ChangedAt = DateTime.Now, IsDone = false, TaskId = _currentTask.Id });
+                    foreach (var s in spans)
+                    {
+                        var x = span.GetSpanStart(s);
+                        var line = GetCurrentLine(text, x);
+                        if (line != -1)
+                            _currentItems[line].IsDone = true;
+                    }
                 }
-
                 if (_currentTask != null && _currentTask.Id > 0)
                 {
                     _currentTask.Name = taskName.Text;
@@ -116,10 +122,19 @@ namespace ToDoList
             if (_currentTask != null && _currentTask.Id > 0)
             {
                 taskName.Text = _currentTask.Name;
-                taskBody.TextFormatted = new SpannableString(_currentTask.Text);
+                var wordSpan = new SpannableString(_currentTask.Text);
                 delete.Enabled = true;
                 var items = await _repo.GetTaskItems(_currentTask.Id);
                 _currentItems = items;
+                foreach(var item in items)
+                {
+                    if(item.IsDone)
+                    {
+                        wordSpan.SetSpan(new ForegroundColorSpan(Android.Graphics.Color.Red), _currentTask.Text.IndexOf(item.Text), _currentTask.Text.IndexOf(item.Text) + item.Text.Length, SpanTypes.ExclusiveExclusive);
+                        wordSpan.SetSpan(new StrikethroughSpan(), _currentTask.Text.IndexOf(item.Text), _currentTask.Text.IndexOf(item.Text) + item.Text.Length, SpanTypes.ExclusiveExclusive);
+                    }
+                }
+                taskBody.TextFormatted = wordSpan;
             }
             else
             {
@@ -133,8 +148,14 @@ namespace ToDoList
         {
             var text = taskBody.TextFormatted;
             SpannableString wordSpan = new SpannableString(text);
-            wordSpan.SetSpan(new ForegroundColorSpan(Android.Graphics.Color.Red), taskBody.SelectionStart, taskBody.SelectionEnd, SpanTypes.ExclusiveExclusive);
-            wordSpan.SetSpan(new StrikethroughSpan(), taskBody.SelectionStart, taskBody.SelectionEnd, SpanTypes.ExclusiveExclusive);
+            var line = GetCurrentLine(taskBody.Text, taskBody.SelectionStart);
+            var textItems = taskBody.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
+            var beforeText = string.Join("\n", textItems.Take(line));
+            if (line > 0)
+                beforeText += "\n";
+
+            wordSpan.SetSpan(new ForegroundColorSpan(Android.Graphics.Color.Red), beforeText.Length, beforeText.Length + textItems[line].Length, SpanTypes.ExclusiveExclusive);
+            wordSpan.SetSpan(new StrikethroughSpan(), beforeText.Length, beforeText.Length + textItems[line].Length, SpanTypes.ExclusiveExclusive);
             taskBody.TextFormatted = wordSpan;
         }
         
@@ -149,6 +170,30 @@ namespace ToDoList
             savedList.ItemSelected += handler;
             savedList.Adapter = adapter;
             savedList.SetSelection(index, true);
+        }
+
+        private int GetCurrentLine(string text, int cursorAt)
+        {
+            if(!string.IsNullOrEmpty(text) && cursorAt >=0 && cursorAt <= text.Length)
+            {
+                if (cursorAt == text.Length)
+                    cursorAt--;
+                var firstPart = text.Substring(0, cursorAt + 1);
+                var lines = firstPart.Split(new string[] { "\n" }, StringSplitOptions.None);
+                return lines.Count() - 1;
+            }
+            return -1;
+        }
+
+        private void CreateCurrentItemsFromText(string text)
+        {
+            var textItems = text.Split(new string[] { "\n" }, StringSplitOptions.None);
+            _currentItems = new List<TaskItem>();
+            foreach (var textItem in textItems)
+            {
+                if (!string.IsNullOrEmpty(textItem))
+                    _currentItems.Add(new TaskItem() { Text = textItem, ChangedAt = DateTime.Now, IsDone = false, TaskId = _currentTask.Id });
+            }
         }
     }
 }
