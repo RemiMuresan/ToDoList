@@ -8,22 +8,19 @@ using Android.Text;
 using Android.Webkit;
 using Android.Text.Style;
 using System.IO;
-using ToDoData;
-using SQLite;
 using System.Linq;
 using System.Collections.Generic;
+using ToDoDataService;
+using ToDoData;
 
 namespace ToDoList
 {
     [Activity(Label = "ToDoList", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        private readonly string _databasePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "todo.db");
-        private List<Task> _savedTasks;
+        private ToDoService _service;
         private Task _currentTask;
         private List<TaskItem> _currentItems;
-        private ToDoBL.TasksRepository _repo;
-        private List<int> _checkedItems;
 
         EditText taskName;
         EditText taskBody;
@@ -31,15 +28,13 @@ namespace ToDoList
         Button delete;
         EventHandler<AdapterView.ItemSelectedEventArgs> handler;
 
-        protected override async void OnCreate(Android.OS.Bundle bundle)
+        protected override void OnCreate(Android.OS.Bundle bundle)
         {
             base.OnCreate(bundle);
-
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.Main);
+            _service = new ToDoService(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "todo.db"));
 
-            // Get our button from the layout resource,
-            // and attach an event to it
             Button colorText = FindViewById<Button>(Resource.Id.colorText);
             Button save = FindViewById<Button>(Resource.Id.addList);
             delete = FindViewById<Button>(Resource.Id.deleteTask);
@@ -47,15 +42,6 @@ namespace ToDoList
             taskBody = FindViewById<EditText>(Resource.Id.editText);
             taskName = FindViewById<EditText>(Resource.Id.editName);
             savedList = FindViewById<Spinner>(Resource.Id.savedList);
-            _checkedItems = new List<int>();
-            _repo = new ToDoBL.TasksRepository(_databasePath);
-
-            _savedTasks = await _repo.GetTasks();
-            if (_savedTasks == null)
-            {
-                _savedTasks = new List<Task>();
-            }
-            _savedTasks.Insert(0, new ToDoData.Task() { Name = "New" });
             LoadSavedTasks(0);
 
             colorText.Click += ColorText_Click;
@@ -68,7 +54,7 @@ namespace ToDoList
             if (!string.IsNullOrEmpty(taskName.Text) && !string.IsNullOrEmpty(taskBody.Text))
             {
                 var text = taskBody.Text;
-                CreateCurrentItemsFromText(text);
+                var currentItems = _service.CreateCurrentItemsFromText(text);
                 var span = new SpannableString(taskBody.TextFormatted);
                 var spans = span.GetSpans(0, taskBody.Text.Length - 1, Java.Lang.Class.FromType(typeof(ForegroundColorSpan)));
                 if (span != null)
@@ -76,9 +62,9 @@ namespace ToDoList
                     foreach (var s in spans)
                     {
                         var x = span.GetSpanStart(s);
-                        var line = GetCurrentLine(text, x);
+                        var line = _service.GetCurrentLine(text, x);
                         if (line != -1)
-                            _currentItems[line].IsDone = true;
+                            currentItems[line].IsDone = true;
                     }
                 }
                 if (_currentTask != null && _currentTask.Id > 0)
@@ -94,37 +80,33 @@ namespace ToDoList
                     _currentTask.LastChange = DateTime.Now;
                     _currentTask.Text = taskBody.TextFormatted.ToString();
                     _currentTask.Name = taskName.Text;
-                    _savedTasks.Add(_currentTask);
                     delete.Enabled = true;
                 }
-                var id = await _repo.InsertUpdateTask(_currentTask, _currentItems);
-                _currentTask.Id = id;
-                var item = _savedTasks.Where(x => x.Id == _currentTask.Id).FirstOrDefault();
-                item = _currentTask; ;
-                LoadSavedTasks(_savedTasks.IndexOf(item));
+                var index = await _service.AddTask(_currentTask, currentItems.ToList());
+                LoadSavedTasks(index);
             }
         }
 
         private void Delete_Click(object sender, EventArgs e)
         {
-            _repo.DeleteTask(_currentTask);
-            _savedTasks.Remove(_currentTask);
+            _service.DeleteTask(_currentTask);
             taskName.Text = string.Empty;
             taskBody.Text = string.Empty;
-            _currentTask = _savedTasks[0];
+            _currentTask = new Task();
             delete.Enabled = false;
             LoadSavedTasks(0);
         }
 
         private async void SavedList_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
-            _currentTask = _savedTasks.ElementAt(e.Position);
+            var savedTasks = await _service.GetSavedTasks();
+            _currentTask = savedTasks.ElementAt(e.Position);
             if (_currentTask != null && _currentTask.Id > 0)
             {
                 taskName.Text = _currentTask.Name;
                 var wordSpan = new SpannableString(_currentTask.Text);
                 delete.Enabled = true;
-                var items = await _repo.GetTaskItems(_currentTask.Id);
+                var items = await _service.GetTaskItems(_currentTask.Id);
                 _currentItems = items;
                 foreach(var item in items)
                 {
@@ -148,7 +130,7 @@ namespace ToDoList
         {
             var text = taskBody.TextFormatted;
             SpannableString wordSpan = new SpannableString(text);
-            var line = GetCurrentLine(taskBody.Text, taskBody.SelectionStart);
+            var line = _service.GetCurrentLine(taskBody.Text, taskBody.SelectionStart);
             var textItems = taskBody.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
             var beforeText = string.Join("\n", textItems.Take(line));
             if (line > 0)
@@ -159,9 +141,10 @@ namespace ToDoList
             taskBody.TextFormatted = wordSpan;
         }
         
-        private void LoadSavedTasks(int index)
+        private async void LoadSavedTasks(int index)
         {
-            var adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleSpinnerItem, _savedTasks);
+            var tasks = await _service.GetSavedTasks();
+            var adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleSpinnerItem, tasks);
             adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             adapter.SetNotifyOnChange(true);
             if (handler != null)
@@ -170,30 +153,6 @@ namespace ToDoList
             savedList.ItemSelected += handler;
             savedList.Adapter = adapter;
             savedList.SetSelection(index, true);
-        }
-
-        private int GetCurrentLine(string text, int cursorAt)
-        {
-            if(!string.IsNullOrEmpty(text) && cursorAt >=0 && cursorAt <= text.Length)
-            {
-                if (cursorAt == text.Length)
-                    cursorAt--;
-                var firstPart = text.Substring(0, cursorAt + 1);
-                var lines = firstPart.Split(new string[] { "\n" }, StringSplitOptions.None);
-                return lines.Count() - 1;
-            }
-            return -1;
-        }
-
-        private void CreateCurrentItemsFromText(string text)
-        {
-            var textItems = text.Split(new string[] { "\n" }, StringSplitOptions.None);
-            _currentItems = new List<TaskItem>();
-            foreach (var textItem in textItems)
-            {
-                if (!string.IsNullOrEmpty(textItem))
-                    _currentItems.Add(new TaskItem() { Text = textItem, ChangedAt = DateTime.Now, IsDone = false, TaskId = _currentTask.Id });
-            }
         }
     }
 }

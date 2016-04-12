@@ -10,7 +10,7 @@ namespace ToDoBL
 {
     public class TasksRepository
     {
-        private readonly SQLiteAsyncConnection _connection;
+        private readonly SQLite.SQLiteAsyncConnection _connection;
 
         public TasksRepository(string path)
         {
@@ -20,7 +20,7 @@ namespace ToDoBL
                 _connection.CreateTableAsync<ToDoData.Task>();
                 _connection.CreateTableAsync<ToDoData.TaskItem>();
             }
-            catch (SQLiteException ex)
+            catch (SQLite.SQLiteException ex)
             {
 
             }

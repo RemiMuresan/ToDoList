@@ -80,10 +80,9 @@ public class MonoPackageManager {
 class MonoPackageManager_Resources {
 	public static final String[] Assemblies = new String[]{
 		"ToDoList.dll",
-		"SQLite-net.dll",
 		"SQLitePCL.raw.dll",
-		"ToDoBL.dll",
-		"ToDoData.dll",
+		"ToDoDataService.dll",
+		"ToDoDL.dll",
 		"System.Collections.Concurrent.dll",
 		"System.Collections.dll",
 		"System.ComponentModel.Annotations.dll",
@@ -134,9 +133,8 @@ class MonoPackageManager_Resources {
 		"System.Xml.XDocument.dll",
 		"System.Xml.XmlSerializer.dll",
 		"System.ServiceModel.Internals.dll",
-		"SQLiteNetExtensions.dll",
-		"SQLite.Net.dll",
-		"Newtonsoft.Json.dll",
+		"ToDoDAL.dll",
+		"SQLite-net.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};
