@@ -21,7 +21,5 @@ D:\work\ToDoList\ToDoList\ToDoList\bin\Debug\ToDoDL.pdb
 D:\work\ToDoList\ToDoList\ToDoList\bin\Debug\ToDoDL.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoList\bin\Debug\ToDoDataService.dll
 D:\work\ToDoList\ToDoList\ToDoList\bin\Debug\ToDoDataService.pdb
-D:\work\ToDoList\ToDoList\ToDoList\bin\Debug\ToDoDataService.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoList\bin\Debug\ToDoList.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\ToDoList.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoList\bin\Debug\ToDoList.dll.mdb

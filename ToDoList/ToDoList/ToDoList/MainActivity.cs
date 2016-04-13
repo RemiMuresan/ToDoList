@@ -12,6 +12,8 @@ using System.Linq;
 using System.Collections.Generic;
 using ToDoDataService;
 using ToDoData;
+using TinyIoC;
+using Contracts;
 
 namespace ToDoList
 {
