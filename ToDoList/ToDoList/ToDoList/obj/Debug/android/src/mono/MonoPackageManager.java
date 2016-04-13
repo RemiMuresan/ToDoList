@@ -80,6 +80,7 @@ public class MonoPackageManager {
 class MonoPackageManager_Resources {
 	public static final String[] Assemblies = new String[]{
 		"ToDoList.dll",
+		"Contracts.dll",
 		"SQLitePCL.raw.dll",
 		"ToDoDataService.dll",
 		"ToDoDL.dll",

@@ -1,4 +1,5 @@
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\ToDoList.dll
+D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\Contracts.dll
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\Microsoft.CSharp.dll
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\Mono.Android.dll
 D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\assemblies\Mono.Data.Sqlite.dll

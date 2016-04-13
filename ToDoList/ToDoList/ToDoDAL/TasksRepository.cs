@@ -21,6 +21,7 @@ namespace ToDoBL
             }
             catch (SQLite.SQLiteException ex)
             {
+                throw ex;
             }
         }
         public async Task<int> InsertUpdateTask(ToDoData.Task task, List<ToDoData.TaskItem> items)
@@ -47,6 +48,7 @@ namespace ToDoBL
             }
             catch (SQLiteException ex)
             {
+                throw ex;
             }
             return task.Id;
         }
@@ -59,24 +61,46 @@ namespace ToDoBL
             }
             catch (SQLiteException ex)
             {
+                throw ex;
             }
         }
 
         public async Task<List<ToDoData.Task>> GetTasks()
         {
-            return await _connection.Table<ToDoData.Task>().ToListAsync();
+            try
+            {
+                return await _connection.Table<ToDoData.Task>().ToListAsync();
+            }
+            catch (SQLiteException ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<List<ToDoData.TaskItem>> GetTaskItems(int taskId)
         {
-            return await _connection.Table<ToDoData.TaskItem>().Where(x => x.TaskId == taskId).ToListAsync();
+            try
+            {
+                return await _connection.Table<ToDoData.TaskItem>().Where(x => x.TaskId == taskId).ToListAsync();
+            }
+            catch (SQLiteException ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<ToDoData.Task> GetTask(int id)
         {
-            return await (from t in _connection.Table<ToDoData.Task>()
+            try
+            {
+                return await (from t in _connection.Table<ToDoData.Task>()
                           where t.Id == id
                           select t).FirstOrDefaultAsync();
+            }
+            catch (SQLiteException ex)
+            {
+                throw ex;
+            }
         }
     }
 }

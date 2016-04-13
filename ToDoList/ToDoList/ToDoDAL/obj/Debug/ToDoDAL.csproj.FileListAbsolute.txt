@@ -9,3 +9,13 @@ D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDL.dll
 D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDL.pdb
 D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll
 D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.pdb
+D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb

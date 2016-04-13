@@ -22,68 +22,123 @@ namespace ToDoDataService
 
         private async System.Threading.Tasks.Task<List<Task>> PopulateList()
         {
-            var savedTasks = await _repo.GetTasks();
-            if (savedTasks == null)
+            try
             {
-                savedTasks = new List<Task>();
+                var savedTasks = await _repo.GetTasks();
+                if (savedTasks == null)
+                {
+                    savedTasks = new List<Task>();
+                }
+                savedTasks.Insert(0, new ToDoData.Task() { Name = "New" });
+                return savedTasks;
             }
-            savedTasks.Insert(0, new ToDoData.Task() { Name = "New" });
-            return savedTasks;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
-        
+
         public IList<TaskItem> CreateCurrentItemsFromText(string text)
         {
-            var textItems = text.Split(new string[] { "\n" }, StringSplitOptions.None);
-            var currentItems = new List<TaskItem>();
-            foreach (var textItem in textItems)
+
+            try
             {
-                if (!string.IsNullOrEmpty(textItem))
-                    currentItems.Add(new TaskItem() { Text = textItem, ChangedAt = DateTime.Now, IsDone = false });
+                var textItems = text.Split(new string[] { "\n" }, StringSplitOptions.None);
+                var currentItems = new List<TaskItem>();
+                foreach (var textItem in textItems)
+                {
+                    if (!string.IsNullOrEmpty(textItem))
+                        currentItems.Add(new TaskItem() { Text = textItem, ChangedAt = DateTime.Now, IsDone = false });
+                }
+                return currentItems;
             }
-            return currentItems;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async System.Threading.Tasks.Task<List<Task>> GetSavedTasks()
         {
-            if(_savedTasks == null)
+
+            try
             {
-                _savedTasks = await PopulateList();
+                if (_savedTasks == null)
+                {
+                    _savedTasks = await PopulateList();
+                }
+                return _savedTasks;
             }
-            return _savedTasks;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public async System.Threading.Tasks.Task<int> AddTask(Task task, List<TaskItem> currentItems)
         {
-            if (task.Id == 0)
-                _savedTasks.Add(task);
-            var id = await _repo.InsertUpdateTask(task, currentItems);
-            task.Id = id;
-            var item = _savedTasks.Where(x => x.Id == task.Id).FirstOrDefault();
-            item = task;
-            return _savedTasks.IndexOf(task);
+
+            try
+            {
+                if (task.Id == 0)
+                    _savedTasks.Add(task);
+                var id = await _repo.InsertUpdateTask(task, currentItems);
+                task.Id = id;
+                var item = _savedTasks.Where(x => x.Id == task.Id).FirstOrDefault();
+                item = task;
+                return _savedTasks.IndexOf(task);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async System.Threading.Tasks.Task<List<TaskItem>> GetTaskItems(int taskId)
         {
-            return await _repo.GetTaskItems(taskId);
+
+            try
+            {
+                return await _repo.GetTaskItems(taskId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void DeleteTask(Task task)
         {
-            _repo.DeleteTask(task);
-            _savedTasks.Remove(task);
+
+            try
+            {
+                _repo.DeleteTask(task);
+                _savedTasks.Remove(task);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public int GetCurrentLine(string text, int cursorAt)
         {
-            if (!string.IsNullOrEmpty(text) && cursorAt >= 0 && cursorAt <= text.Length)
+
+            try
             {
-                if (cursorAt == text.Length)
-                    cursorAt--;
-                var firstPart = text.Substring(0, cursorAt + 1);
-                var lines = firstPart.Split(new string[] { "\n" }, StringSplitOptions.None);
-                return lines.Count() - 1;
+                if (!string.IsNullOrEmpty(text) && cursorAt >= 0 && cursorAt <= text.Length)
+                {
+                    if (cursorAt == text.Length)
+                        cursorAt--;
+                    var firstPart = text.Substring(0, cursorAt + 1);
+                    var lines = firstPart.Split(new string[] { "\n" }, StringSplitOptions.None);
+                    return lines.Count() - 1;
+                }
+                return -1;
             }
-            return -1;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
