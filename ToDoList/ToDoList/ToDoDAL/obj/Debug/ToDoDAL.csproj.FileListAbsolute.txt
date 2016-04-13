@@ -15,7 +15,3 @@ D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb

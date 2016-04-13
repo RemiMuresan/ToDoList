@@ -15,7 +15,3 @@ D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDataService\bin\Debug\ToDoDataService.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDataService\bin\Debug\ToDoDataService.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDataService\bin\Debug\ToDoDataService.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDataService\bin\Debug\ToDoDataService.dll.mdb

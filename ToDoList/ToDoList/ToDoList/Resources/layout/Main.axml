@@ -48,6 +48,57 @@
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45.0dp"
+        android:id="@+id/linearLayout5"
+        android:layout_marginBottom="0.0dp">
+        <TextView
+            android:text="@string/DueDateLabel"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="89.0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/dueDateLbl" />
+        <Button
+            android:id="@+id/dueDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/DueDateText" />
+        <Button
+            android:id="@+id/dueDateReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Reset" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45.0dp"
+        android:id="@+id/linearLayout6"
+        android:layout_marginBottom="0.0dp">
+        <TextView
+            android:text="@string/AlertLabel"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="89.0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/dueDateLbl" />
+        <Button
+            android:id="@+id/alertDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/AlertDate" />
+        <Button
+            android:id="@+id/alertTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/AlertTime" />
+        <Button
+            android:id="@+id/alertReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Reset" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"

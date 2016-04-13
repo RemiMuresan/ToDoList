@@ -17,7 +17,8 @@ namespace ToDoData
         public DateTime DateCreated { get; set; }
         public DateTime LastChange { get; set; }
         public DateTime? DueDate { get; set; }
-        
+        public DateTime? Alert { get; set; }
+
         public override string ToString()
         {
             return this.Name;
