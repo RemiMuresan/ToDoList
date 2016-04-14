@@ -14,6 +14,8 @@ using ToDoDataService;
 using ToDoData;
 using TinyIoC;
 using Contracts;
+using Android.Provider;
+using Java.Util;
 
 namespace ToDoList
 {
@@ -83,15 +85,15 @@ namespace ToDoList
         private void AlertReset_Click(object sender, EventArgs e)
         {
             _currentTask.Alert = null;
-            alertDate.Text = Resource.String.AlertDate.ToString();
-            alertTime.Text = Resource.String.AlertTime.ToString();
+            alertDate.Text = BaseContext.Resources.GetString(Resource.String.AlertDate);
+            alertTime.Text = BaseContext.Resources.GetString(Resource.String.AlertTime);
 
         }
 
         private void DueReset_Click(object sender, EventArgs e)
         {
             _currentTask.DueDate = null;
-            due.Text = Resource.String.DueDateText.ToString();
+            due.Text = BaseContext.Resources.GetString(Resource.String.DueDateText);
         }
 
         private async void Save_Click(object sender, EventArgs e)
@@ -122,7 +124,6 @@ namespace ToDoList
                     }
                     else
                     {
-                        _currentTask = new Task();
                         _currentTask.DateCreated = DateTime.Now;
                         _currentTask.LastChange = DateTime.Now;
                         _currentTask.Text = taskBody.TextFormatted.ToString();
@@ -131,6 +132,8 @@ namespace ToDoList
                     }
                     var index = await _service.AddTask(_currentTask, currentItems.ToList());
                     LoadSavedTasks(index);
+                    if (_currentTask.Alert.HasValue)
+                        Remind(_currentTask.Alert.Value);
                 }
             }
             catch (Exception ex)
@@ -178,11 +181,16 @@ namespace ToDoList
                         }
                     }
                     taskBody.TextFormatted = wordSpan;
+                    due.Text = _currentTask.DueDate.HasValue ? _currentTask.DueDate.Value.ToShortDateString() : BaseContext.Resources.GetString(Resource.String.DueDateText);
+                    alertDate.Text = _currentTask.Alert.HasValue ? _currentTask.Alert.Value.ToShortDateString() : BaseContext.Resources.GetString(Resource.String.AlertDate);
+                    alertTime.Text = _currentTask.Alert.HasValue ? _currentTask.Alert.Value.ToShortTimeString() : BaseContext.Resources.GetString(Resource.String.AlertTime);
                 }
                 else
                 {
                     taskName.Text = string.Empty;
                     taskBody.Text = string.Empty;
+                    AlertReset_Click(null, null);
+                    DueReset_Click(null, null);
                     delete.Enabled = false;
                 }
             }
@@ -243,7 +251,12 @@ namespace ToDoList
         private void AlertDatePickerCallback(object sender, DatePickerDialog.DateSetEventArgs e)
         {
             alertDate.Text = e.Date.ToShortDateString();
-            _currentTask.DueDate = e.Date;
+            var date = e.Date;
+            if (_currentTask.Alert.HasValue)
+            {
+                date = date.AddHours(_currentTask.Alert.Value.Hour);
+                date = date.AddMinutes(_currentTask.Alert.Value.Minute);
+            }
             _currentTask.Alert = e.Date;
         }
 
@@ -278,6 +291,65 @@ namespace ToDoList
                     _currentTask.Alert.HasValue ? _currentTask.Alert.Value.Minute : DateTime.Now.Minute, true);
             }
             return null;
+        }
+
+        //public void Remind(DateTime dateTime, string title, string message)
+        //{
+
+        //    Intent alarmIntent = new Intent(BaseContext, typeof(AlarmReceiver));
+        //    alarmIntent.PutExtra("message", message);
+        //    alarmIntent.PutExtra("title", title);
+
+        //    PendingIntent pendingIntent = PendingIntent.GetBroadcast(BaseContext, 0, alarmIntent, PendingIntentFlags.UpdateCurrent);
+        //    AlarmManager alarmManager = (AlarmManager)BaseContext.GetSystemService(Context.AlarmService);
+
+        //    //TODO: For demo set after 5 seconds.
+        //    alarmManager.Set(AlarmType.ElapsedRealtime, SystemClock.ElapsedRealtime() + 5 * 1000, pendingIntent);
+
+        //}
+
+        public void Remind(DateTime date)
+        {
+
+            //Calendar cal = Calendar.GetInstance(Java.Util.TimeZone.Default);
+            //Intent intent = new Intent(Intent.ActionEdit);
+            //intent.SetType("vnd.android.cursor.item/event");
+            //intent.PutExtra("beginTime", GetDateTimeMS(date.Year, date.Month, date.Day, date.Hour, date.Minute));
+            //intent.PutExtra("allDay", true);
+            //intent.PutExtra("rrule", "FREQ=YEARLY");
+            //intent.PutExtra("endTime", GetDateTimeMS(date.Year, date.Month, date.Day, date.Hour, date.Minute + 1));
+            //intent.PutExtra("title", "A Test Event from android app");
+            //StartActivity(intent);
+
+            ContentValues eventValues = new ContentValues();
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.CalendarId, 1);
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.Title, "Title Here");
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.Description, "Some Text goes here");
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.AllDay, 0);
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.HasAlarm, 1);
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.Dtstart, GetDateTimeMS(date.Year, date.Month, date.Day, date.Hour, date.Minute));
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.Dtend, GetDateTimeMS(date.Year, date.Month, date.Day, date.Hour, date.Minute + 1));
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.EventTimezone, "UTC");
+            var eventUri = ContentResolver.Insert(CalendarContract.Events.ContentUri, eventValues);
+            long eventID = long.Parse(eventUri.LastPathSegment);
+            ContentValues remindervalues = new ContentValues();
+            remindervalues.Put(CalendarContract.Reminders.InterfaceConsts.EventId, eventID);
+            remindervalues.Put(CalendarContract.Reminders.InterfaceConsts.Method, (int)Android.Provider.RemindersMethod.Alert);
+            remindervalues.Put(CalendarContract.Reminders.InterfaceConsts.Minutes, 3);
+            var reminderURI = ContentResolver.Insert(CalendarContract.Reminders.ContentUri, remindervalues);
+        }
+
+        long GetDateTimeMS(int yr, int month, int day, int hr, int min)
+        {
+            Calendar c = Calendar.GetInstance(Java.Util.TimeZone.Default);
+
+            c.Set(CalendarField.DayOfMonth, day);
+            c.Set(CalendarField.HourOfDay, hr);
+            c.Set(CalendarField.Minute, min);
+            c.Set(CalendarField.Month, month);
+            c.Set(CalendarField.Year, yr);
+
+            return c.TimeInMillis;
         }
     }
 }
