@@ -140,5 +140,19 @@ namespace ToDoDataService
                 throw ex;
             }
         }
+
+        public bool HasChanges(Task t1, Task t2)
+        {
+            if (!(string.IsNullOrEmpty(t1.Name)  && t2.Name == "New") && t1.Name != t2.Name)
+                return true;
+            if (t1.Text != t2.Text && !(string.IsNullOrEmpty(t1.Text) && string.IsNullOrEmpty(t2.Text)))
+                return true;
+            if (t1.DueDate != t2.DueDate)
+                return true;
+            if (t1.Alert != t2.Alert)
+                return true;
+
+            return false;
+        }
     }
 }

@@ -19,9 +19,31 @@ namespace ToDoData
         public DateTime? DueDate { get; set; }
         public DateTime? Alert { get; set; }
 
+        public long? EventId { get; set; }
+        public long? ReminderId { get; set; }
+
         public override string ToString()
         {
-            return this.Name;
+            return Name;
+        }
+
+        public Task()
+        {
+                
+        }
+
+        public Task(Task t)
+        {
+            Id = t.Id;
+            Name = t.Name;
+            Text = t.Text;
+            DueDate = t.DueDate;
+            Alert = t.Alert;
+            DateCreated = t.DateCreated;
+            LastChange = t.LastChange;
+            EventId = t.EventId;
+            ReminderId = t.ReminderId;
+
         }
     }
 }

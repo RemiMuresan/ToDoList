@@ -21,8 +21,9 @@
         <Spinner
             android:id="@+id/savedList"
             android:layout_width="244.5dp"
-            android:layout_height="25.0dp"
-            android:prompt="@string/ExistingTasksLabel" />
+            android:layout_height="39.0dp"
+            android:prompt="@string/ExistingTasksLabel"
+            android:layout_marginBottom="15.0dp" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
