@@ -63,14 +63,14 @@ namespace ToDoList
 			// aapt resource value: 0x7f060004
 			public const int addList = 2131099652;
 			
-			// aapt resource value: 0x7f06000c
-			public const int alertDate = 2131099660;
+			// aapt resource value: 0x7f06000d
+			public const int alertDate = 2131099661;
+			
+			// aapt resource value: 0x7f06000f
+			public const int alertReset = 2131099663;
 			
 			// aapt resource value: 0x7f06000e
-			public const int alertReset = 2131099662;
-			
-			// aapt resource value: 0x7f06000d
-			public const int alertTime = 2131099661;
+			public const int alertTime = 2131099662;
 			
 			// aapt resource value: 0x7f060006
 			public const int colorText = 2131099654;
@@ -78,50 +78,53 @@ namespace ToDoList
 			// aapt resource value: 0x7f060005
 			public const int deleteTask = 2131099653;
 			
-			// aapt resource value: 0x7f060009
-			public const int dueDate = 2131099657;
-			
-			// aapt resource value: 0x7f060008
-			public const int dueDateLbl = 2131099656;
-			
 			// aapt resource value: 0x7f06000a
-			public const int dueDateReset = 2131099658;
+			public const int dueDate = 2131099658;
 			
-			// aapt resource value: 0x7f060011
-			public const int editName = 2131099665;
+			// aapt resource value: 0x7f060009
+			public const int dueDateLbl = 2131099657;
 			
-			// aapt resource value: 0x7f060014
-			public const int editText = 2131099668;
+			// aapt resource value: 0x7f06000b
+			public const int dueDateReset = 2131099659;
+			
+			// aapt resource value: 0x7f060012
+			public const int editName = 2131099666;
+			
+			// aapt resource value: 0x7f060015
+			public const int editText = 2131099669;
 			
 			// aapt resource value: 0x7f060003
 			public const int linearLayout1 = 2131099651;
 			
-			// aapt resource value: 0x7f06000f
-			public const int linearLayout2 = 2131099663;
+			// aapt resource value: 0x7f060010
+			public const int linearLayout2 = 2131099664;
 			
 			// aapt resource value: 0x7f060000
 			public const int linearLayout3 = 2131099648;
 			
-			// aapt resource value: 0x7f060007
-			public const int linearLayout5 = 2131099655;
+			// aapt resource value: 0x7f060008
+			public const int linearLayout5 = 2131099656;
 			
-			// aapt resource value: 0x7f06000b
-			public const int linearLayout6 = 2131099659;
+			// aapt resource value: 0x7f06000c
+			public const int linearLayout6 = 2131099660;
 			
 			// aapt resource value: 0x7f060002
 			public const int savedList = 2131099650;
 			
-			// aapt resource value: 0x7f060012
-			public const int space1 = 2131099666;
+			// aapt resource value: 0x7f060007
+			public const int share = 2131099655;
 			
-			// aapt resource value: 0x7f060010
-			public const int textView1 = 2131099664;
+			// aapt resource value: 0x7f060013
+			public const int space1 = 2131099667;
+			
+			// aapt resource value: 0x7f060011
+			public const int textView1 = 2131099665;
 			
 			// aapt resource value: 0x7f060001
 			public const int textView2 = 2131099649;
 			
-			// aapt resource value: 0x7f060013
-			public const int toDoLabel = 2131099667;
+			// aapt resource value: 0x7f060014
+			public const int toDoLabel = 2131099668;
 			
 			static Id()
 			{
@@ -187,6 +190,9 @@ namespace ToDoList
 			
 			// aapt resource value: 0x7f040009
 			public const int Reset = 2130968585;
+			
+			// aapt resource value: 0x7f04000d
+			public const int Share = 2130968589;
 			
 			// aapt resource value: 0x7f040005
 			public const int ToDo = 2130968581;

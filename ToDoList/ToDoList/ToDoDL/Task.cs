@@ -21,6 +21,8 @@ namespace ToDoData
 
         public long? EventId { get; set; }
         public long? ReminderId { get; set; }
+        [Unique]
+        public Guid TaskId { get; set; }
 
         public override string ToString()
         {

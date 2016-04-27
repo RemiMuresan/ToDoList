@@ -9,10 +9,8 @@ D:\work\ToDoList\ToDoList\ToDoDataService\bin\Debug\ToDoDL.pdb
 D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.csprojResolveAssemblyReference.cache
 D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.dll
 D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.pdb
-D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDataService\bin\Debug\ToDoDataService.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDataService\bin\Debug\ToDoDataService.dll.mdb
+D:\work\ToDoList\ToDoList\ToDoDataService\bin\Debug\Newtonsoft.Json.dll
+D:\work\ToDoList\ToDoList\ToDoDataService\bin\Debug\Newtonsoft.Json.xml
 D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDataService\bin\Debug\ToDoDataService.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDataService\obj\Debug\ToDoDataService.dll.mdb

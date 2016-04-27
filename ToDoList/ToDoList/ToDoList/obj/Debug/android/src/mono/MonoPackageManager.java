@@ -84,6 +84,7 @@ class MonoPackageManager_Resources {
 		"SQLitePCL.raw.dll",
 		"ToDoDataService.dll",
 		"ToDoDL.dll",
+		"Xamarin.Mobile.dll",
 		"System.Collections.Concurrent.dll",
 		"System.Collections.dll",
 		"System.ComponentModel.Annotations.dll",
@@ -136,6 +137,7 @@ class MonoPackageManager_Resources {
 		"System.ServiceModel.Internals.dll",
 		"ToDoDAL.dll",
 		"SQLite-net.dll",
+		"Newtonsoft.Json.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};

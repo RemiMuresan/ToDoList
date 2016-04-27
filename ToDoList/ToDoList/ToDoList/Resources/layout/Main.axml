@@ -46,6 +46,11 @@
             android:id="@+id/colorText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
+        <Button
+            android:text="@string/Share"
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"

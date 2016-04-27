@@ -3,12 +3,15 @@
   <Jars></Jars>
   <ResolvedResourceDirectories>
     <ResolvedResourceDirectory>D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\__library_projects__\SQLitePCL.raw\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\__library_projects__\Xamarin.Mobile\library_project_imports\res</ResolvedResourceDirectory>
   </ResolvedResourceDirectories>
   <ResolvedAssetDirectories>
     <ResolvedAssetDirectory>D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\__library_projects__\SQLitePCL.raw\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\__library_projects__\Xamarin.Mobile\library_project_imports\assets</ResolvedAssetDirectory>
   </ResolvedAssetDirectories>
   <ResolvedEnvironmentFiles />
   <ResolvedResourceDirectoryStamps>
     <ResolvedResourceDirectoryStamp>D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\__library_projects__\SQLitePCL.raw.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>D:\work\ToDoList\ToDoList\ToDoList\obj\Debug\__library_projects__\Xamarin.Mobile.stamp</ResolvedResourceDirectoryStamp>
   </ResolvedResourceDirectoryStamps>
 </Paths>

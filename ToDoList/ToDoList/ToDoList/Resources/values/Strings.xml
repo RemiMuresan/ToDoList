@@ -2,7 +2,7 @@
 <resources>
     <string name="AddList">Save</string>
     <string name="ApplicationName">ToDoList</string>
-    <string name="Color">Mark as done</string>
+    <string name="Color">Done</string>
   <string name="Delete">Delete</string>
   <string name="NameLabel">Name:</string>
   <string name="ToDo">ToDo:</string>
@@ -13,4 +13,5 @@
   <string name="AlertLabel">Alert:</string>
   <string name="AlertDate">Date</string>
   <string name="AlertTime">Time</string>
+  <string name="Share">Share</string>
 </resources>

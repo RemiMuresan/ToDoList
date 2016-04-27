@@ -17,7 +17,7 @@ using Contracts;
 using Android.Provider;
 using Java.Util;
 using static Android.Provider.CalendarContract;
-using System.Runtime.Serialization.Formatters.Binary;
+using Android.Database;
 
 namespace ToDoList
 {
@@ -55,6 +55,7 @@ namespace ToDoList
             try
             {
                 SetContentView(Resource.Layout.Main);
+
                 _service = new ToDoService(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "todo.db"));
                 _currentTask = new Task() { Name = "New" };
 
@@ -62,6 +63,7 @@ namespace ToDoList
                 Button save = FindViewById<Button>(Resource.Id.addList);
                 Button dueReset = FindViewById<Button>(Resource.Id.dueDateReset);
                 Button alertReset = FindViewById<Button>(Resource.Id.alertReset);
+                Button share = FindViewById<Button>(Resource.Id.share);
                 due = FindViewById<Button>(Resource.Id.dueDate);
                 delete = FindViewById<Button>(Resource.Id.deleteTask);
                 alertDate = FindViewById<Button>(Resource.Id.alertDate);
@@ -75,6 +77,7 @@ namespace ToDoList
                 colorText.Click += ColorText_Click;
                 save.Click += Save_Click;
                 delete.Click += Delete_Click;
+                share.Click += Share_Click;
                 due.Click += (o, e) => ShowDialog((int)DialogEnum.DUE_DIALOG_ID);
                 alertDate.Click += (o, e) => ShowDialog((int)DialogEnum.ALERT_DATE_DIALOG_ID);
                 alertTime.Click += (o, e) => ShowDialog((int)DialogEnum.ALERT_TIME_DIALOG_ID);
@@ -94,9 +97,10 @@ namespace ToDoList
                 if (!string.IsNullOrEmpty(taskName.Text) && !string.IsNullOrEmpty(taskBody.Text))
                 {
                     var text = taskBody.Text;
+                    var textFormatted = taskBody.TextFormatted;
                     var currentItems = _service.CreateCurrentItemsFromText(text);
-                    var span = new SpannableString(taskBody.TextFormatted);
-                    var spans = span.GetSpans(0, taskBody.Text.Length - 1, Java.Lang.Class.FromType(typeof(ForegroundColorSpan)));
+                    var span = new SpannableString(textFormatted);
+                    var spans = span.GetSpans(0, text.Length - 1, Java.Lang.Class.FromType(typeof(ForegroundColorSpan)));
                     if (span != null)
                     {
                         foreach (var s in spans)
@@ -109,8 +113,9 @@ namespace ToDoList
                     }
                     PopulateCurrentTask(_currentTask);
                     if (_currentTask.Id == 0)
-                    { 
+                    {
                         _currentTask.DateCreated = DateTime.Now;
+                        _currentTask.TaskId = new Guid();
                         delete.Enabled = true;
                     }
                     if (_currentTask.DueDate.HasValue && _currentTask.Alert.HasValue)
@@ -205,8 +210,7 @@ namespace ToDoList
                     {
                         await LoadSelectedItem(savedTasks, e);
                     }
-                }
-                
+                }                
             }
             catch (Exception ex)
             {
@@ -251,16 +255,43 @@ namespace ToDoList
         {
             try
             {
-                var text = taskBody.TextFormatted;
-                SpannableString wordSpan = new SpannableString(text);
+                var textFormatted = taskBody.TextFormatted;
+                var text = taskBody.Text;
+                SpannableString wordSpan = new SpannableString(textFormatted);
                 var line = _service.GetCurrentLine(taskBody.Text, taskBody.SelectionStart);
                 var textItems = taskBody.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
                 var beforeText = string.Join("\n", textItems.Take(line));
                 if (line > 0)
                     beforeText += "\n";
+                bool addSpan = true;
+                var spans = wordSpan.GetSpans(0, text.Length - 1, Java.Lang.Class.FromType(typeof(StrikethroughSpan)));
+                foreach (var s in spans)
+                {
+                    var x = wordSpan.GetSpanStart(s);
+                    if(x == beforeText.Length)
+                    {
+                        wordSpan.RemoveSpan(s);
+                        addSpan = false;
+                        continue;
+                    }
+                }
 
-                wordSpan.SetSpan(new ForegroundColorSpan(Android.Graphics.Color.Red), beforeText.Length, beforeText.Length + textItems[line].Length, SpanTypes.ExclusiveExclusive);
-                wordSpan.SetSpan(new StrikethroughSpan(), beforeText.Length, beforeText.Length + textItems[line].Length, SpanTypes.ExclusiveExclusive);
+                spans = wordSpan.GetSpans(0, text.Length - 1, Java.Lang.Class.FromType(typeof(ForegroundColorSpan)));
+                foreach (var s in spans)
+                {
+                    var x = wordSpan.GetSpanStart(s);
+                    if (x == beforeText.Length)
+                    {
+                        wordSpan.RemoveSpan(s);
+                        addSpan = false;
+                        continue;
+                    }
+                }
+                if (addSpan)
+                {
+                    wordSpan.SetSpan(new ForegroundColorSpan(Android.Graphics.Color.Red), beforeText.Length, beforeText.Length + textItems[line].Length, SpanTypes.ExclusiveExclusive);
+                    wordSpan.SetSpan(new StrikethroughSpan(), beforeText.Length, beforeText.Length + textItems[line].Length, SpanTypes.ExclusiveExclusive);
+                }
                 taskBody.TextFormatted = wordSpan;
             }
             catch (Exception ex)
@@ -290,6 +321,7 @@ namespace ToDoList
             }
         }
 
+        #region Dates
         private void DueDatePickerCallback(object sender, DatePickerDialog.DateSetEventArgs e)
         {
             due.Text = e.Date.ToShortDateString();
@@ -356,8 +388,7 @@ namespace ToDoList
             }
             return null;
         }
-
-        
+        #endregion
 
         #region Events
 
@@ -481,6 +512,56 @@ namespace ToDoList
             return deleted;
         }
         #endregion
+
+        void Share_Click(object sender, EventArgs e)
+        {
+            var contactPickerIntent = new Intent(Intent.ActionPick, Android.Provider.ContactsContract.Contacts.ContentUri);
+            StartActivityForResult(contactPickerIntent, 101);
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            try
+            {
+                if (requestCode == 101 && resultCode == Result.Ok)
+                {
+                    if (data == null || data.Data == null)
+                        return;
+
+                    var addressBook = new Xamarin.Contacts.AddressBook(this);
+                    addressBook.PreferContactAggregation = false;
+
+                    var contact = addressBook.Load(data.Data.LastPathSegment);
+
+                    var mobile = (from p in contact.Phones
+                                  where p.Type == Xamarin.Contacts.PhoneType.Mobile
+                                  select p.Number).FirstOrDefault();
+
+                    if (string.IsNullOrEmpty(mobile))
+                    {
+                        Toast.MakeText(this, "No Mobile Number for contact!",
+                            ToastLength.Short).Show();
+                        return;
+                    }
+                    var smsMgr = Android.Telephony.SmsManager.Default;
+                    var t = new TaskModel();
+                    t.TaskId = _currentTask.TaskId;
+                    t.Name = _currentTask.Name;
+                    t.Text = _currentTask.Text;
+                    t.DueDate = _currentTask.DueDate;
+
+                    var msg = _service.SerializeTask(t);
+                    if (msg.Length > 140)
+                        msg = msg.Substring(0, 140);
+
+                    smsMgr.SendTextMessage(mobile, null, msg, null, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+            }
+        }
     }
 }
 

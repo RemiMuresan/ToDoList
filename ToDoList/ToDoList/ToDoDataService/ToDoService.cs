@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -153,6 +154,11 @@ namespace ToDoDataService
                 return true;
 
             return false;
+        }
+
+        public string SerializeTask(TaskModel t)
+        {
+            return JsonConvert.SerializeObject(t);
         }
     }
 }
