@@ -1,4 +1,3 @@
-D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.csprojResolveAssemblyReference.cache
 D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll
 D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.pdb
 D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\SQLite-net.dll
@@ -7,16 +6,9 @@ D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\SQLite.Net.dll
 D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\SQLitePCL.raw.dll
 D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDL.dll
 D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDL.pdb
+D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.csprojResolveAssemblyReference.cache
 D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll
 D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.pdb
-D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
-D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDAL\bin\Debug\ToDoDAL.dll.mdb
 D:\work\ToDoList\ToDoList\ToDoDAL\obj\Debug\ToDoDAL.dll.mdb

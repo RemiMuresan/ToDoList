@@ -264,33 +264,17 @@ namespace ToDoList
                 if (line > 0)
                     beforeText += "\n";
                 bool addSpan = true;
-                var spans = wordSpan.GetSpans(0, text.Length - 1, Java.Lang.Class.FromType(typeof(StrikethroughSpan)));
-                foreach (var s in spans)
-                {
-                    var x = wordSpan.GetSpanStart(s);
-                    if(x == beforeText.Length)
-                    {
-                        wordSpan.RemoveSpan(s);
-                        addSpan = false;
-                        continue;
-                    }
-                }
-
-                spans = wordSpan.GetSpans(0, text.Length - 1, Java.Lang.Class.FromType(typeof(ForegroundColorSpan)));
-                foreach (var s in spans)
-                {
-                    var x = wordSpan.GetSpanStart(s);
-                    if (x == beforeText.Length)
-                    {
-                        wordSpan.RemoveSpan(s);
-                        addSpan = false;
-                        continue;
-                    }
-                }
+                var sspans = wordSpan.GetSpans(0, text.Length - 1, Java.Lang.Class.FromType(typeof(StrikethroughSpan)));
+                addSpan = RemoveSpan(wordSpan, beforeText.Length, sspans);
                 if (addSpan)
                 {
                     wordSpan.SetSpan(new ForegroundColorSpan(Android.Graphics.Color.Red), beforeText.Length, beforeText.Length + textItems[line].Length, SpanTypes.ExclusiveExclusive);
                     wordSpan.SetSpan(new StrikethroughSpan(), beforeText.Length, beforeText.Length + textItems[line].Length, SpanTypes.ExclusiveExclusive);
+                }
+                else
+                {
+                    var fcspans = wordSpan.GetSpans(0, text.Length - 1, Java.Lang.Class.FromType(typeof(ForegroundColorSpan)));
+                    RemoveSpan(wordSpan, beforeText.Length, fcspans);
                 }
                 taskBody.TextFormatted = wordSpan;
             }
@@ -298,6 +282,21 @@ namespace ToDoList
             {
                 _logger.Error(ex.ToString());
             }
+        }
+
+        private bool RemoveSpan(SpannableString wordSpan, int start, Java.Lang.Object[] spans)
+        {
+            foreach (var s in spans)
+            {
+                var x = wordSpan.GetSpanStart(s);
+                if (x == start)
+                {
+                    wordSpan.RemoveSpan(s);
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private async void LoadSavedTasks(int index)
